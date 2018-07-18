@@ -1,0 +1,65 @@
+.b-day-image-block {
+  max-width: 550px;
+  max-height: 550px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .b-day-image-block {
+    max-width: 320px;
+    max-height: 320px;
+  }
+}
+
+.b-day-image-block:hover {
+  transform: scale(1.05);
+}
+
+.rotate {
+  animation: rotate infinite 10s linear;
+}
+
+.jump {
+  animation: rotate infinite 10s linear;
+}
+
+.bounce {
+  animation: bounceDown 1s;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bounceDown {
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, 5px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
