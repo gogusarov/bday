@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getDays, getHours, getMinutes, getSeconds, BEMNormalize } from "./utils";
-import {DAY, HOUR, MINUTE} from "./constants";
+import { getDays, getHours, getMinutes, getSeconds, BEMNormalize } from './utils';
+import { DAY, HOUR, MINUTE, SECOND } from './constants';
 import TimeItem from './components/TimeItem';
 import Image from './components/Image';
 
@@ -39,7 +39,7 @@ class App extends Component {
           isCounting: false
         });
       }
-    });
+    }, SECOND);
   }
 
   componentWillUnmount() {
@@ -52,19 +52,21 @@ class App extends Component {
     return (
       <React.Fragment>
         <Image/>
-				<div className={BEMNormalize(bDayBlock, 'time')}>
-					<TimeItem value={days} label="days"/>
-					<TimeItem value={hours} label="hours"/>
-					<TimeItem value={minutes} label="minutes"/>
-					<TimeItem value={seconds} label="seconds"/>
-				</div>
+        <div className={BEMNormalize(bDayBlock, 'time')}>
+          <TimeItem value={days} label="days"/>
+          <TimeItem value={hours} label="hours"/>
+          <TimeItem value={minutes} label="minutes"/>
+          <TimeItem value={seconds} label="seconds"/>
+        </div>
       </React.Fragment>
     )
   }
 
   get videoBlock() {
     return (
-			<iframe style={{width: '100vw', height: '100vh'}} src="https://www.youtube.com/embed/Smwrw4sNCxE?start=33&end=72&autoplay=1&showinfo=0&controls=0" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen />
+      <iframe style={{width: '100vw', height: '100vh'}}
+              src="https://www.youtube.com/embed/Smwrw4sNCxE?start=33&end=72&autoplay=1&showinfo=0&controls=0"
+              frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen/>
     );
   }
 
@@ -74,7 +76,7 @@ class App extends Component {
 
     return (
       <React.Fragment>
-				{isCounting ? this.contentBlock : this.videoBlock}
+        {isCounting ? this.contentBlock : this.videoBlock}
       </React.Fragment>
     );
   }

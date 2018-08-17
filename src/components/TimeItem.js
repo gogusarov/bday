@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
-import { BEMNormalize } from "../utils";
+import { BEMNormalize } from '../utils';
 import './TimeItem.css';
+
 const timeBlock = 'b-day-time-block';
 
 export default class TimeItem extends PureComponent {

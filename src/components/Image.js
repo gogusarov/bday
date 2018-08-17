@@ -1,77 +1,77 @@
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import './Image.css';
-import { EFFECTS } from "../constants";
+import { EFFECTS } from '../constants';
 
 const imageBlock = 'b-day-image-block';
 
 export default class Img extends PureComponent {
   state = {
-  	counter: 0,
-		...EFFECTS[0]
-	};
+    counter: 0,
+    ...EFFECTS[0]
+  };
 
   constructor(props) {
-  	super(props);
+    super(props);
 
-  	this.sound = null;
-  	this.onImgClick = this.onImgClick.bind(this);
-	}
+    this.sound = null;
+    this.onImgClick = this.onImgClick.bind(this);
+  }
 
-	componentDidMount() {
-  	EFFECTS.forEach(item => {
-  		if (item.pic) {
-  			const img = new Image();
+  componentDidMount() {
+    EFFECTS.forEach(item => {
+      if (item.pic) {
+        const img = new Image();
 
-				img.src = item.pic;
-			}
-		});
-	}
+        img.src = item.pic;
+      }
+    });
+  }
 
-	componentWillUnmount() {
-  	this.clearSound();
-	}
+  componentWillUnmount() {
+    this.clearSound();
+  }
 
-	onImgClick() {
-		this.applyEffects((this.state.counter + 1) % 4);
-	}
+  onImgClick() {
+    this.applyEffects((this.state.counter + 1) % 4);
+  }
 
-	applyEffects(counter) {
-		const effect = EFFECTS[counter];
+  applyEffects(counter) {
+    const effect = EFFECTS[counter];
 
-  	this.clearSound();
+    this.clearSound();
 
-		if (effect.sound) {
-			this.playSound(effect.sound);
-		}
+    if (effect.sound) {
+      this.playSound(effect.sound);
+    }
 
-		this.setState({
-			counter,
-			...effect
-		});
-	}
+    this.setState({
+      counter,
+      ...effect
+    });
+  }
 
-	playSound(sound) {
-  	this.sound = new Audio(sound);
-  	this.sound.play();
-	}
+  playSound(sound) {
+    this.sound = new Audio(sound);
+    this.sound.play();
+  }
 
-	clearSound() {
-  	if (this.sound) {
-			this.sound.src = '';
-			this.sound.currentTime = 0;
-			this.sound.load();
-		}
-	}
+  clearSound() {
+    if (this.sound) {
+      this.sound.src = '';
+      this.sound.currentTime = 0;
+      this.sound.load();
+    }
+  }
 
   render() {
-  	const { pic, animation = '' } = this.state;
+    const { pic, animation = '' } = this.state;
 
     return (
-			<img
-				src={pic}
-				className={classNames(imageBlock, animation)}
-				onClick={this.onImgClick}/>
+      <img
+        src={pic}
+        className={classNames(imageBlock, animation)}
+        onClick={this.onImgClick}/>
     );
   }
 }
