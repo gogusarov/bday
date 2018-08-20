@@ -2,11 +2,13 @@ import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import './Image.css';
 import { EFFECTS } from '../constants';
+import loading from '../assets/loading.gif';
 
 const imageBlock = 'b-day-image-block';
 
 export default class Img extends PureComponent {
   state = {
+    loaded: false,
     counter: 0,
     ...EFFECTS[0]
   };
@@ -19,13 +21,40 @@ export default class Img extends PureComponent {
   }
 
   componentDidMount() {
+    let assetPromises = [];
+
     EFFECTS.forEach(item => {
       if (item.pic) {
+        let res;
         const img = new Image();
+        const p = new Promise(r => res = r);
 
+        img.onload = res;
+        assetPromises.push(p);
         img.src = item.pic;
       }
+
+      if (item.sound) {
+        let res;
+        const sound = new Audio();
+        const p = new Promise(r => res = r);
+
+        sound.oncanplaythrough = res;
+        assetPromises.push(p);
+        sound.src = item.sound;
+        sound.load();
+      }
     });
+
+    Promise.all(assetPromises)
+      .then(() => {
+        this.setState({
+          loaded: true
+        });
+      })
+      .catch((err) => {
+        console.warn('Unable to load assets: ', err);
+      });
   }
 
   componentWillUnmount() {
@@ -65,13 +94,15 @@ export default class Img extends PureComponent {
   }
 
   render() {
-    const { pic, animation = '' } = this.state;
+    const { pic, animation = '', loaded } = this.state;
 
     return (
-      <img
-        src={pic}
-        className={classNames(imageBlock, animation)}
-        onClick={this.onImgClick}/>
+      loaded
+        ? <img
+          src={pic}
+          className={classNames(imageBlock, animation)}
+          onClick={this.onImgClick}/>
+        : <img src={loading}/>
     );
   }
 }

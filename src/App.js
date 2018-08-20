@@ -5,7 +5,7 @@ import { DAY, HOUR, MINUTE, SECOND } from './constants';
 import TimeItem from './components/TimeItem';
 import Image from './components/Image';
 
-const BDAY = new Date(2018, 6, 23, 0, 0, 0, 0);
+const BDAY = new Date(2019, 6, 23, 0, 0, 0, 0);
 
 const bDayBlock = 'b-day-block';
 
@@ -16,34 +16,44 @@ class App extends Component {
 
   timer = null;
 
+  constructor(props) {
+    super(props);
+
+    this.updateTime = this.updateTime.bind(this);
+  }
+
   componentDidMount() {
-    this.timer = setInterval(() => {
-      const diff = BDAY - Date.now();
-
-      if (diff > 0) {
-        const days = getDays(diff);
-        const hours = getHours(diff) - DAY * days;
-        const minutes = getMinutes(diff) - DAY * HOUR * days - HOUR * hours;
-        const seconds = getSeconds(diff) - DAY * HOUR * MINUTE * days - HOUR * MINUTE * hours - MINUTE * minutes;
-
-        this.setState({
-          days,
-          hours,
-          minutes,
-          seconds
-        });
-      } else {
-        clearInterval(this.timer);
-
-        this.setState({
-          isCounting: false
-        });
-      }
-    }, SECOND);
+    this.updateTime()
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
+    clearTimeout(this.timer);
+  }
+
+  updateTime() {
+    const diff = BDAY - Date.now();
+
+    if (diff > 0) {
+      const days = getDays(diff);
+      const hours = getHours(diff) - DAY * days;
+      const minutes = getMinutes(diff) - DAY * HOUR * days - HOUR * hours;
+      const seconds = getSeconds(diff) - DAY * HOUR * MINUTE * days - HOUR * MINUTE * hours - MINUTE * minutes;
+
+      this.setState({
+        days,
+        hours,
+        minutes,
+        seconds
+      });
+
+      this.timer = setTimeout(this.updateTime, SECOND);
+    } else {
+      clearTimeout(this.timer);
+
+      this.setState({
+        isCounting: false
+      });
+    }
   }
 
   get contentBlock() {
@@ -59,7 +69,7 @@ class App extends Component {
           <TimeItem value={seconds} label="seconds"/>
         </div>
       </React.Fragment>
-    )
+    );
   }
 
   get videoBlock() {
