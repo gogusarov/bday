@@ -1,7 +1,8 @@
 {
   "main.css": "static/css/main.0a44e650.css",
   "main.css.map": "static/css/main.0a44e650.css.map",
-  "main.js": "static/js/main.74bb0760.js",
-  "main.js.map": "static/js/main.74bb0760.js.map",
-  "static\\media\\OpenSans-Regular.ttf": "static/media/OpenSans-Regular.629a55a7.ttf"
+  "main.js": "static/js/main.42071658.js",
+  "main.js.map": "static/js/main.42071658.js.map",
+  "static\\media\\OpenSans-Regular.ttf": "static/media/OpenSans-Regular.629a55a7.ttf",
+  "static\\media\\loading.gif": "static/media/loading.9305a9cb.gif"
 }
